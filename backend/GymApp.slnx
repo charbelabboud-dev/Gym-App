@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="GymApp.API/GymApp.API.csproj" />
+  <Project Path="GymApp.Core/GymApp.Core.csproj" />
+  <Project Path="GymApp.Infrastructure/GymApp.Infrastructure.csproj" />
+</Solution>
