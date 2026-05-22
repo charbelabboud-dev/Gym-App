@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\PROJ .net\\Gym-App\\Backend\\GymApp.API\\GymApp.API.csproj": {}
+    "C:\\PROJ .net\\Gym-App\\Backend\\GymApp.API\\GymApp.API.csproj": {}
   },
   "projects": {
-    "c:\\PROJ .net\\Gym-App\\Backend\\GymApp.API\\GymApp.API.csproj": {
+    "C:\\PROJ .net\\Gym-App\\Backend\\GymApp.API\\GymApp.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\PROJ .net\\Gym-App\\Backend\\GymApp.API\\GymApp.API.csproj",
+        "projectUniqueName": "C:\\PROJ .net\\Gym-App\\Backend\\GymApp.API\\GymApp.API.csproj",
         "projectName": "GymApp.API",
-        "projectPath": "c:\\PROJ .net\\Gym-App\\Backend\\GymApp.API\\GymApp.API.csproj",
+        "projectPath": "C:\\PROJ .net\\Gym-App\\Backend\\GymApp.API\\GymApp.API.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "c:\\PROJ .net\\Gym-App\\Backend\\GymApp.API\\obj\\",
+        "outputPath": "C:\\PROJ .net\\Gym-App\\Backend\\GymApp.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
