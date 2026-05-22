@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\PROJ .net\\Gym-App\\backend\\GymApp.Core\\GymApp.Core.csproj": {}
+    "C:\\Users\\Lucas\\Desktop\\uni\\sem6\\I3332\\FitLink\\backend\\GymApp.Core\\GymApp.Core.csproj": {}
   },
   "projects": {
-    "C:\\PROJ .net\\Gym-App\\backend\\GymApp.Core\\GymApp.Core.csproj": {
+    "C:\\Users\\Lucas\\Desktop\\uni\\sem6\\I3332\\FitLink\\backend\\GymApp.Core\\GymApp.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\PROJ .net\\Gym-App\\backend\\GymApp.Core\\GymApp.Core.csproj",
+        "projectUniqueName": "C:\\Users\\Lucas\\Desktop\\uni\\sem6\\I3332\\FitLink\\backend\\GymApp.Core\\GymApp.Core.csproj",
         "projectName": "GymApp.Core",
-        "projectPath": "C:\\PROJ .net\\Gym-App\\backend\\GymApp.Core\\GymApp.Core.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\PROJ .net\\Gym-App\\backend\\GymApp.Core\\obj\\",
+        "projectPath": "C:\\Users\\Lucas\\Desktop\\uni\\sem6\\I3332\\FitLink\\backend\\GymApp.Core\\GymApp.Core.csproj",
+        "packagesPath": "C:\\Users\\Lucas\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Lucas\\Desktop\\uni\\sem6\\I3332\\FitLink\\backend\\GymApp.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,12 +26,10 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net10.0": {
-            "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {}
           }
@@ -46,11 +44,10 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net10.0": {
-          "framework": "net10.0",
           "targetAlias": "net10.0",
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
@@ -74,7 +71,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
