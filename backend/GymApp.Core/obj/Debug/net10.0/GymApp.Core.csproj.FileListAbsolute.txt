@@ -1,0 +1,6 @@
+C:\PROJ .net\Gym-App\backend\GymApp.Core\obj\Debug\net10.0\GymApp.Core.csproj.AssemblyReference.cache
+C:\PROJ .net\Gym-App\backend\GymApp.Core\obj\Debug\net10.0\GymApp.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\PROJ .net\Gym-App\backend\GymApp.Core\obj\Debug\net10.0\GymApp.Core.AssemblyInfoInputs.cache
+C:\PROJ .net\Gym-App\backend\GymApp.Core\obj\Debug\net10.0\GymApp.Core.AssemblyInfo.cs
+C:\PROJ .net\Gym-App\backend\GymApp.Core\obj\Debug\net10.0\GymApp.Core.csproj.CoreCompileInputs.cache
+C:\PROJ .net\Gym-App\backend\GymApp.Core\obj\Debug\net10.0\GymApp.Core.sourcelink.json
