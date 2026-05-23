@@ -4,3 +4,9 @@ C:\PROJ .net\Gym-App\backend\GymApp.Core\obj\Debug\net10.0\GymApp.Core.AssemblyI
 C:\PROJ .net\Gym-App\backend\GymApp.Core\obj\Debug\net10.0\GymApp.Core.AssemblyInfo.cs
 C:\PROJ .net\Gym-App\backend\GymApp.Core\obj\Debug\net10.0\GymApp.Core.csproj.CoreCompileInputs.cache
 C:\PROJ .net\Gym-App\backend\GymApp.Core\obj\Debug\net10.0\GymApp.Core.sourcelink.json
+C:\Users\Lucas\Desktop\uni\sem6\I3332\FitLink\backend\GymApp.Core\obj\Debug\net10.0\GymApp.Core.csproj.AssemblyReference.cache
+C:\Users\Lucas\Desktop\uni\sem6\I3332\FitLink\backend\GymApp.Core\obj\Debug\net10.0\GymApp.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lucas\Desktop\uni\sem6\I3332\FitLink\backend\GymApp.Core\obj\Debug\net10.0\GymApp.Core.AssemblyInfoInputs.cache
+C:\Users\Lucas\Desktop\uni\sem6\I3332\FitLink\backend\GymApp.Core\obj\Debug\net10.0\GymApp.Core.AssemblyInfo.cs
+C:\Users\Lucas\Desktop\uni\sem6\I3332\FitLink\backend\GymApp.Core\obj\Debug\net10.0\GymApp.Core.csproj.CoreCompileInputs.cache
+C:\Users\Lucas\Desktop\uni\sem6\I3332\FitLink\backend\GymApp.Core\obj\Debug\net10.0\GymApp.Core.sourcelink.json
