@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
 import sessionService from '../services/SessionService';
 import PageHeader from '../Components/common/PageHeader';
 import Card from '../Components/common/Card';
@@ -11,7 +10,6 @@ import '../Styles/global.css';
 function RescheduleSessionPage() {
     const navigate = useNavigate();
     const location = useLocation();
-    const { user } = useAuth();
     
     const session = location.state?.session;
     
