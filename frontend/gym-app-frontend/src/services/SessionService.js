@@ -57,7 +57,16 @@ updateSessionStatus: async (sessionId, status) => {
         throw error;
     }
 },
-
+// Update session status (for coaches)
+updateSessionStatus: async (sessionId, status) => {
+    try {
+        const response = await api.put(`/Session/${sessionId}/status`, { status });
+        return response.data;
+    } catch (error) {
+        console.error('Error updating session status:', error);
+        throw error;
+    }
+},
     // Cancel a session
     cancelSession: async (sessionId) => {
         try {
