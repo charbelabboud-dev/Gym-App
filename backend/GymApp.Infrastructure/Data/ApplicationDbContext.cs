@@ -8,14 +8,14 @@ namespace GymApp.Infrastructure.Data
             : base(options)
         {
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            {
-                if (!optionsBuilder.IsConfigured)
-                {
-                    optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=GymAppDB;Username=postgres;Password=postgresqlPass",
-                        b => b.MigrationsAssembly("GymApp.API"));
-                }
-            }
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //     {
+        //         if (!optionsBuilder.IsConfigured)
+        //         {
+        //             optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=GymAppDB;Username=postgres;Password=postgresqlPass",
+        //                 b => b.MigrationsAssembly("GymApp.API"));
+        //         }
+        //     }
 
 
         // DbSets for all tables
