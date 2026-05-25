@@ -56,7 +56,7 @@ builder.Services.AddScoped<IGoalService, GoalService>();
 // ==========================
 var key = Encoding.ASCII.GetBytes(
     builder.Configuration["Jwt:Key"]
-    ?? "SuperSecretKey123!@#$%"
+    ?? "SuperSecretKey123!@#$%^&*VeryLongSecureKey2026"
 );
 
 builder.Services.AddAuthentication(options =>

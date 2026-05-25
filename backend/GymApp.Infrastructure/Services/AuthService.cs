@@ -204,7 +204,7 @@ namespace GymApp.Infrastructure.Services
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var key = Encoding.ASCII.GetBytes(
-                _configuration["Jwt:Key"] ?? "SuperSecretKey123!@#$%"
+                _configuration["Jwt:Key"] ?? "SuperSecretKey123!@#$%^&*VeryLongSecureKey2026"
             );
 
             var tokenDescriptor = new SecurityTokenDescriptor
