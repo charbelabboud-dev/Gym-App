@@ -10,12 +10,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add CORS to allow requests from HTML page
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
-    {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
-    });
+    options.AddPolicy("AllowReactApp",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000", "https://gym-app-seven-mu.vercel.app")
+                  .AllowAnyMethod()
+                  .AllowAnyHeader()
+                  .AllowCredentials();
+        });
 });
 
 // Add services
@@ -65,7 +67,7 @@ builder.Services.AddAuthentication(options =>
 });
 
 var app = builder.Build();
-app.UseCors("AllowAll");
+app.UseCors("AllowReactApp");
 
 // if (app.Environment.IsDevelopment())
 // {
