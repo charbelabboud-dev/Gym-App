@@ -8,7 +8,9 @@ using GymApp.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add CORS to allow requests from Vercel frontend
+// ==========================
+// CORS - allow all origins (temporary, to fix Vercel preview URLs)
+// ==========================
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
@@ -20,19 +22,26 @@ builder.Services.AddCors(options =>
         });
 });
 
-// Add services
+// ==========================
+// Services
+// ==========================
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Database - use environment variable or connection string from configuration
-var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
-                       ?? builder.Configuration.GetConnectionString("DefaultConnection");
+// ==========================
+// Database
+// ==========================
+var connectionString =
+    Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
+    ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-// Register services
+// ==========================
+// Dependency Injection
+// ==========================
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICoachService, CoachService>();
 builder.Services.AddScoped<ISessionService, SessionService>();
@@ -42,8 +51,13 @@ builder.Services.AddScoped<IProgressService, ProgressService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IGoalService, GoalService>();
 
+// ==========================
 // JWT Authentication
-var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"] ?? "SuperSecretKey123!@#$%");
+// ==========================
+var key = Encoding.ASCII.GetBytes(
+    builder.Configuration["Jwt:Key"]
+    ?? "SuperSecretKey123!@#$%"
+);
 
 builder.Services.AddAuthentication(options =>
 {
@@ -54,6 +68,7 @@ builder.Services.AddAuthentication(options =>
 {
     options.RequireHttpsMetadata = false;
     options.SaveToken = true;
+
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
@@ -66,23 +81,38 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
-// Use CORS
+// ==========================
+// Swagger (always on)
+// ==========================
+app.UseSwagger();
+app.UseSwaggerUI();
+
+// ==========================
+// CORS - must be before auth
+// ==========================
 app.UseCors("AllowAll");
 
-if (app.Environment.IsDevelopment())
+// ==========================
+// OPTIONS handler (backup)
+// ==========================
+app.Use(async (context, next) =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-else
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    if (context.Request.Method == "OPTIONS")
+    {
+        context.Response.StatusCode = 200;
+        context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
+        context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        context.Response.Headers.Append("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        await context.Response.CompleteAsync();
+        return;
+    }
+    await next();
+});
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection(); // disabled for now
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();
