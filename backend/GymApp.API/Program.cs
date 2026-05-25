@@ -7,16 +7,21 @@ using GymApp.Core.Interfaces;
 using GymApp.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-// Add CORS to allow requests from HTML page
+
+// Add CORS to allow requests from Vercel frontend
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowReactApp",
+    options.AddPolicy("AllowVercel",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000", "https://gym-app-seven-mu.vercel.app")
-                  .AllowAnyMethod()
-                  .AllowAnyHeader()
-                  .AllowCredentials();
+            policy.WithOrigins(
+                "http://localhost:3000",
+                "https://gym-app-seven-mu.vercel.app",
+                "https://gym-app-git-main-charbelabboud-devs-projects.vercel.app"
+            )
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
         });
 });
 
@@ -24,25 +29,23 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-// builder.Services.AddScoped<IReviewService, ReviewService>();
-builder.Services.AddScoped<INotificationService, NotificationService>();
-// builder.Services.AddScoped<IClientService, ClientService>();
-builder.Services.AddScoped<IGoalService, GoalService>();
 
-// Database
-var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") 
+// Database - use environment variable or connection string from configuration
+var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
                        ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-// Services
+// Register services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICoachService, CoachService>();
 builder.Services.AddScoped<ISessionService, SessionService>();
 builder.Services.AddScoped<IWorkoutPlanService, WorkoutPlanService>();
 builder.Services.AddScoped<IDietPlanService, DietPlanService>();
 builder.Services.AddScoped<IProgressService, ProgressService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IGoalService, GoalService>();
 
 // JWT Authentication
 var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"] ?? "SuperSecretKey123!@#$%");
@@ -67,13 +70,20 @@ builder.Services.AddAuthentication(options =>
 });
 
 var app = builder.Build();
-app.UseCors("AllowReactApp");
 
-// if (app.Environment.IsDevelopment())
-// {
-// }
+// Use CORS
+app.UseCors("AllowVercel");
+
+if (app.Environment.IsDevelopment())
+{
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+else
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
