@@ -11,17 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add CORS to allow requests from Vercel frontend
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowVercel",
+    options.AddPolicy("AllowAll",
         policy =>
         {
-            policy.WithOrigins(
-                "http://localhost:3000",
-                "https://gym-app-seven-mu.vercel.app",
-                "https://gym-app-git-main-charbelabboud-devs-projects.vercel.app"
-            )
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials();
+            policy.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
         });
 });
 
@@ -72,7 +67,7 @@ builder.Services.AddAuthentication(options =>
 var app = builder.Build();
 
 // Use CORS
-app.UseCors("AllowVercel");
+app.UseCors("AllowAll");
 
 if (app.Environment.IsDevelopment())
 {
