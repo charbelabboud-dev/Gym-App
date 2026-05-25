@@ -12,7 +12,7 @@ namespace GymApp.Infrastructure.Data
             {
                 if (!optionsBuilder.IsConfigured)
                 {
-                    optionsBuilder.UseSqlServer("Server=localhost;Database=GymApp;Trusted_Connection=True;TrustServerCertificate=True",
+                    optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=GymAppDB;Username=postgres;Password=postgresqlPass",
                         b => b.MigrationsAssembly("GymApp.API"));
                 }
             }
@@ -38,6 +38,16 @@ namespace GymApp.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+                foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+    {
+        foreach (var property in entityType.GetProperties())
+        {
+            if (property.ClrType == typeof(DateTime) || property.ClrType == typeof(DateTime?))
+            {
+                property.SetColumnType("timestamp without time zone");
+            }
+        }
+    }
             base.OnModelCreating(modelBuilder);
 
             // ========================================
@@ -51,7 +61,7 @@ namespace GymApp.Infrastructure.Data
                 entity.HasIndex(e => e.UserEmail).IsUnique();
                 entity.Property(e => e.UserPassword).IsRequired().HasMaxLength(255);
                 entity.Property(e => e.UserRole).IsRequired().HasMaxLength(20);
-                entity.Property(e => e.CreatedDate).HasDefaultValueSql("GETDATE()");
+                entity.Property(e => e.CreatedDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
             });
             modelBuilder.Entity<ClientGoal>(entity =>
 {
@@ -76,7 +86,7 @@ namespace GymApp.Infrastructure.Data
                 entity.Property(e => e.ClLname).IsRequired().HasMaxLength(20);
                 entity.Property(e => e.ClPhone).HasMaxLength(15);
                 entity.Property(e => e.ClAddress).HasMaxLength(100);
-                entity.Property(e => e.ClRegisterDate).HasDefaultValueSql("GETDATE()");
+                entity.Property(e => e.ClRegisterDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.HasOne(e => e.User)
                     .WithOne(u => u.Client)
@@ -103,7 +113,7 @@ modelBuilder.Entity<ProgressEntry>(entity =>
 {
     entity.ToTable("ProgressEntries");
     entity.HasKey(e => e.Id);
-    entity.Property(e => e.EntryDate).HasDefaultValueSql("GETDATE()");
+    entity.Property(e => e.EntryDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
     
     entity.HasOne(e => e.Client)
         .WithMany(c => c.ProgressEntries)
@@ -193,7 +203,7 @@ modelBuilder.Entity<ProgressEntry>(entity =>
                 entity.Property(e => e.PayAmount).HasPrecision(10, 2);
                 entity.Property(e => e.PayMethod).HasMaxLength(20);
                 entity.Property(e => e.PayStatus).HasMaxLength(20);
-                entity.Property(e => e.PayDate).HasDefaultValueSql("GETDATE()");
+                entity.Property(e => e.PayDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.HasOne(e => e.Client)
                     .WithMany(c => c.Payments)
@@ -235,7 +245,7 @@ modelBuilder.Entity<ProgressEntry>(entity =>
             {
                 entity.ToTable("Attendances");
                 entity.HasKey(e => e.AttId);
-                entity.Property(e => e.CheckInTime).HasDefaultValueSql("GETDATE()");
+                entity.Property(e => e.CheckInTime).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.HasOne(e => e.Client)
                     .WithMany(c => c.Attendances)
@@ -306,7 +316,7 @@ modelBuilder.Entity<ProgressEntry>(entity =>
                 entity.ToTable("Notifications");
                 entity.HasKey(e => e.NotId);
                 entity.Property(e => e.Message).IsRequired().HasMaxLength(200);
-                entity.Property(e => e.CreatedDate).HasDefaultValueSql("GETDATE()");
+                entity.Property(e => e.CreatedDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.HasOne(e => e.User)
                     .WithMany(u => u.Notifications)
@@ -323,7 +333,7 @@ modelBuilder.Entity<ProgressEntry>(entity =>
                 entity.HasKey(e => e.RevId);
                 entity.Property(e => e.Rating).IsRequired();
                 entity.Property(e => e.Comment).HasMaxLength(200);
-                entity.Property(e => e.CreatedDate).HasDefaultValueSql("GETDATE()");
+                entity.Property(e => e.CreatedDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.HasOne(e => e.Client)
                     .WithMany(c => c.Reviews)
