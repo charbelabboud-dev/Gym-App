@@ -23,7 +23,7 @@ function Header() {
             <div className="header-content">
                 <div className="header-logo" onClick={() => navigate('/dashboard')}>
                     <span className="logo-icon">🏋️</span>
-                    <span className="logo-text">GymApp</span>
+                    <span className="logo-text">FitLink</span>
                 </div>
                 
                 <div className="header-user">
