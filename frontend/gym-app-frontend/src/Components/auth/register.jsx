@@ -47,7 +47,7 @@ function Register() {
 
         <div className="auth-visual-logo">
           <div className="auth-visual-logo-icon">🏋️</div>
-          <span className="auth-visual-logo-text">DIET<span>HUB</span></span>
+          <span className="auth-visual-logo-text">FIT<span>LINK</span></span>
         </div>
 
         <div className="auth-visual-content">
