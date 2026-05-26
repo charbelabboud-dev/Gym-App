@@ -21,27 +21,27 @@ function WorkoutPlansPage() {
 
   const clientCode = user?.clientCode;
 
-  useEffect(() => {
-    if (clientCode) {
-      loadPlans();
-    }
-  }, );
+useEffect(() => {
+    const loadPlans = async () => {
+        try {
+            setLoading(true);
+            const result = await workoutPlanService.getClientPlans(clientCode);
+            if (result.success) {
+                setPlans(result.data);
+            } else {
+                setError("Failed to load workout plans");
+            }
+        } catch (err) {
+            setError("Error connecting to server");
+        } finally {
+            setLoading(false);
+        }
+    };
 
-  const loadPlans = async () => {
-    try {
-      setLoading(true);
-      const result = await workoutPlanService.getClientPlans(clientCode);
-      if (result.success) {
-        setPlans(result.data);
-      } else {
-        setError("Failed to load workout plans");
-      }
-    } catch (err) {
-      setError("Error connecting to server");
-    } finally {
-      setLoading(false);
+    if (clientCode) {
+        loadPlans();
     }
-  };
+}, [clientCode]);
 
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
