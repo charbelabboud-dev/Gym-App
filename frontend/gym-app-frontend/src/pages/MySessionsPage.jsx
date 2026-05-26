@@ -25,7 +25,7 @@ function MySessionsPage() {
         if (clientCode) {
             loadSessions();
         }
-    },);
+    },[clientCode]);
 
     const loadSessions = async () => {
         try {
