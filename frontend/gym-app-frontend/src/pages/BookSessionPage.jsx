@@ -32,7 +32,6 @@ function BookSessionPage() {
 
     const clientCode = user?.clientCode;
 
-    // Check if user has client code
     if (!clientCode) {
         return (
             <div className="page-container">
@@ -45,7 +44,6 @@ function BookSessionPage() {
         );
     }
 
-    // Check if coach is selected
     if (!selectedCoach) {
         return (
             <div className="page-container">
@@ -83,9 +81,7 @@ function BookSessionPage() {
             const result = await sessionService.bookSession(sessionData);
             if (result.success) {
                 setSuccess('Session booked successfully! Redirecting...');
-                setTimeout(() => {
-                    navigate('/my-sessions');
-                }, 2000);
+                setTimeout(() => navigate('/my-sessions'), 2000);
             } else {
                 setError(result.message || 'Failed to book session');
             }
@@ -106,28 +102,43 @@ function BookSessionPage() {
 
                 <Card>
                     <form onSubmit={handleSubmit}>
-                        {/* Coach Info Card */}
-                        <div style={{ 
-                            background: '#f8f9fa', 
-                            padding: '15px', 
-                            borderRadius: '12px', 
-                            marginBottom: '20px' 
+
+                        {/* ── Coach Info — dark theme fix ── */}
+                        <div style={{
+                            background: 'rgba(157,255,87,0.06)',
+                            border: '0.5px solid rgba(157,255,87,0.25)',
+                            borderRadius: '12px',
+                            padding: '18px 20px',
+                            marginBottom: '24px',
                         }}>
-                            <h3 style={{ marginBottom: '10px', color: '#2c3e50' }}>Selected Coach</h3>
-                            <p><strong>Name:</strong> {selectedCoach.fullName}</p>
-                            <p><strong>Specialty:</strong> {selectedCoach.specialty}</p>
-                            <p><strong>Phone:</strong> {selectedCoach.phone}</p>
-                            <p><strong>Email:</strong> {selectedCoach.email}</p>
+                            <h3 style={{
+                                marginBottom: '12px',
+                                color: '#9dff57',
+                                fontFamily: "'Bebas Neue', sans-serif",
+                                fontSize: '20px',
+                                letterSpacing: '0.08em',
+                            }}>
+                                Selected Coach
+                            </h3>
+                            <p style={{ marginBottom: '5px', color: 'rgba(242,242,244,0.85)', fontSize: '14px' }}>
+                                <strong style={{ color: '#f2f2f4' }}>Name:</strong> {selectedCoach.fullName}
+                            </p>
+                            <p style={{ marginBottom: '5px', color: 'rgba(242,242,244,0.85)', fontSize: '14px' }}>
+                                <strong style={{ color: '#f2f2f4' }}>Specialty:</strong> {selectedCoach.specialty}
+                            </p>
+                            {selectedCoach.phone && (
+                                <p style={{ marginBottom: '5px', color: 'rgba(242,242,244,0.85)', fontSize: '14px' }}>
+                                    <strong style={{ color: '#f2f2f4' }}>Phone:</strong> {selectedCoach.phone}
+                                </p>
+                            )}
+                            <p style={{ color: 'rgba(242,242,244,0.85)', fontSize: '14px' }}>
+                                <strong style={{ color: '#f2f2f4' }}>Email:</strong> {selectedCoach.email}
+                            </p>
                         </div>
 
                         <div className="form-group">
                             <label>Session Type</label>
-                            <select
-                                name="sessionType"
-                                value={formData.sessionType}
-                                onChange={handleChange}
-                                className="form-control"
-                            >
+                            <select name="sessionType" value={formData.sessionType} onChange={handleChange} className="form-control">
                                 <option value="Training">🏋️ Training</option>
                                 <option value="Consultation">📋 Consultation</option>
                             </select>
@@ -148,12 +159,7 @@ function BookSessionPage() {
 
                         <div className="form-group">
                             <label>Time</label>
-                            <select
-                                name="time"
-                                value={formData.time}
-                                onChange={handleChange}
-                                className="form-control"
-                            >
+                            <select name="time" value={formData.time} onChange={handleChange} className="form-control">
                                 <option value="09:00">09:00 AM</option>
                                 <option value="10:00">10:00 AM</option>
                                 <option value="11:00">11:00 AM</option>
@@ -169,12 +175,7 @@ function BookSessionPage() {
 
                         <div className="form-group">
                             <label>Duration</label>
-                            <select
-                                name="duration"
-                                value={formData.duration}
-                                onChange={handleChange}
-                                className="form-control"
-                            >
+                            <select name="duration" value={formData.duration} onChange={handleChange} className="form-control">
                                 <option value="30">30 minutes</option>
                                 <option value="45">45 minutes</option>
                                 <option value="60">60 minutes</option>
@@ -194,19 +195,11 @@ function BookSessionPage() {
                             />
                         </div>
 
-                        <div style={{ display: 'flex', gap: '15px', marginTop: '20px' }}>
-                            <Button 
-                                type="submit" 
-                                variant="success" 
-                                disabled={loading}
-                            >
+                        <div style={{ display: 'flex', gap: '15px', marginTop: '20px', flexWrap: 'wrap' }}>
+                            <Button type="submit" variant="success" disabled={loading}>
                                 {loading ? 'Booking...' : 'Confirm Booking'}
                             </Button>
-                            <Button 
-                                type="button" 
-                                variant="secondary" 
-                                onClick={() => navigate('/coaches')}
-                            >
+                            <Button type="button" variant="secondary" onClick={() => navigate('/coaches')}>
                                 Choose Different Coach
                             </Button>
                         </div>
