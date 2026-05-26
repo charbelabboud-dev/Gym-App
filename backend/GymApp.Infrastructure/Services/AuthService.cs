@@ -47,13 +47,14 @@ namespace GymApp.Infrastructure.Services
                 IsDeleted = false
             };
 
-            // Add user
             _context.Users.Add(user);
-
-            // Save user first to generate UserId
             await _context.SaveChangesAsync();
 
-            // Create role-specific entity
+            // Create role-specific entity and capture code
+            string clientCode = null;
+            string coachCode = null;
+            string dietitianCode = null;
+
             if (registerDto.Role == "Client")
             {
                 var client = new Client
@@ -73,6 +74,8 @@ namespace GymApp.Infrastructure.Services
                 };
 
                 _context.Clients.Add(client);
+                await _context.SaveChangesAsync();
+                clientCode = client.ClCode; // ✅ capture code
             }
             else if (registerDto.Role == "Coach")
             {
@@ -94,6 +97,8 @@ namespace GymApp.Infrastructure.Services
                 };
 
                 _context.Coaches.Add(coach);
+                await _context.SaveChangesAsync();
+                coachCode = coach.CoCode; // ✅ capture code
             }
             else if (registerDto.Role == "Dietitian")
             {
@@ -112,32 +117,32 @@ namespace GymApp.Infrastructure.Services
                 };
 
                 _context.Dietitians.Add(dietitian);
+                await _context.SaveChangesAsync();
+                dietitianCode = dietitian.DietCode; // ✅ capture code
             }
 
-            // Save role-specific entity
-            await _context.SaveChangesAsync();
-
-            // Return response
+            // Return response with correct code based on role
             return new AuthResponseDto
             {
                 Token = GenerateJwtToken(user),
                 UserId = user.UserId,
                 Email = user.UserEmail,
                 FullName = registerDto.FullName,
-                Role = user.UserRole
+                Role = user.UserRole,
+                ClientCode = clientCode,       // ✅ fixed
+                CoachCode = coachCode,         // ✅ fixed
+                DietitianCode = dietitianCode  // ✅ fixed
             };
         }
 
         public async Task<AuthResponseDto> LoginAsync(LoginDto loginDto)
         {
-            // Find user by email
             var user = await _context.Users
                 .FirstOrDefaultAsync(u => u.UserEmail == loginDto.Email && !u.IsDeleted);
 
             if (user == null)
                 throw new Exception("Invalid email or password");
 
-            // Verify password using BCrypt
             bool isValidPassword = BCrypt.Net.BCrypt.Verify(loginDto.Password, user.UserPassword);
 
             if (!isValidPassword)
@@ -146,7 +151,6 @@ namespace GymApp.Infrastructure.Services
             if (!user.UserStatus)
                 throw new Exception("Account is disabled");
 
-            // Get full name and codes based on role
             string fullName = "";
             string clientCode = null;
             string coachCode = null;
@@ -215,9 +219,7 @@ namespace GymApp.Infrastructure.Services
                     new Claim(ClaimTypes.Email, user.UserEmail),
                     new Claim(ClaimTypes.Role, user.UserRole)
                 }),
-
                 Expires = DateTime.UtcNow.AddDays(7),
-
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key),
                     SecurityAlgorithms.HmacSha256Signature
@@ -225,7 +227,6 @@ namespace GymApp.Infrastructure.Services
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
-
             return tokenHandler.WriteToken(token);
         }
 
@@ -235,11 +236,9 @@ namespace GymApp.Infrastructure.Services
                 .OrderByDescending(c => c.ClCode)
                 .FirstOrDefault();
 
-            if (lastClient == null)
-                return "CL001";
+            if (lastClient == null) return "CL001";
 
             var number = int.Parse(lastClient.ClCode.Substring(2)) + 1;
-
             return "CL" + number.ToString("D3");
         }
 
@@ -249,11 +248,9 @@ namespace GymApp.Infrastructure.Services
                 .OrderByDescending(c => c.CoCode)
                 .FirstOrDefault();
 
-            if (lastCoach == null)
-                return "CO001";
+            if (lastCoach == null) return "CO001";
 
             var number = int.Parse(lastCoach.CoCode.Substring(2)) + 1;
-
             return "CO" + number.ToString("D3");
         }
 
@@ -263,11 +260,9 @@ namespace GymApp.Infrastructure.Services
                 .OrderByDescending(d => d.DietCode)
                 .FirstOrDefault();
 
-            if (lastDietitian == null)
-                return "DT001";
+            if (lastDietitian == null) return "DT001";
 
             var number = int.Parse(lastDietitian.DietCode.Substring(2)) + 1;
-
             return "DT" + number.ToString("D3");
         }
     }
